@@ -14,12 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            // the primary key of users table
             $table->id();
+            // the user name of the account
             $table->string('name');
+            // the user email; can be used in logging in
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            // stores the encrypted user password
             $table->string('password');
-            $table->rememberToken();
+            // an api token assigned to user; is used in communication with font end
+            $table->timestamp('api_token', 5)->nullable();
+            // records the time user been created and updated
             $table->timestamps();
         });
     }
@@ -31,6 +36,7 @@ return new class extends Migration
      */
     public function down()
     {
+        // remove users table if it exists
         Schema::dropIfExists('users');
     }
 };
